@@ -1,0 +1,178 @@
+/**
+ * Terms
+ */
+
+.term,
+.term-tooltip {
+    font-family: "Space Grotesk", "Inter", "Segoe UI", sans-serif;
+}
+
+.term-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    overflow: visible;
+}
+
+.term {
+    --term-accent: var(--vendor-generic);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2em 0.62em;
+    margin: 0 0.08em;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--term-accent) 55%, transparent);
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--term-accent) 16%, #141a28),
+        color-mix(in srgb, var(--term-accent) 8%, #0f1420)
+    );
+    color: #e7efff;
+    font-size: 0.82em;
+    font-weight: 450;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    vertical-align: baseline;
+    cursor: help;
+    transition:
+        transform 140ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease,
+        color 180ms ease;
+}
+
+.term:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.3),
+        0 0 0 1px color-mix(in srgb, var(--term-accent) 40%, transparent);
+}
+
+/* Active vendor badge color */
+.term--nvidia {
+    --term-accent: var(--vendor-nvidia);
+}
+.term--amd {
+    --term-accent: var(--vendor-amd);
+}
+.term--intel {
+    --term-accent: var(--vendor-intel);
+}
+.term--vulkan {
+    --term-accent: var(--vendor-vulkan);
+}
+.term--generic {
+    --term-accent: var(--vendor-generic);
+}
+
+/**
+ * Tooltip
+ */
+
+.term-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 12px);
+    transform: translateX(-50%) translateY(6px) scale(0.98);
+    min-width: 280px;
+    max-width: 380px;
+    padding: 0.65rem 0.75rem;
+    border-radius: 12px;
+
+    /* glass */
+    border: 1px solid rgba(180, 205, 255, 0.25);
+    background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
+        linear-gradient(180deg, rgba(20, 28, 45, 0.78), rgba(12, 18, 30, 0.72));
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+
+    color: #dbe7ff;
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 40;
+    font-size: 0.78em;
+    line-height: 1.45;
+    transition:
+        opacity 150ms ease,
+        transform 180ms ease;
+    background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
+        linear-gradient(180deg, rgba(20, 28, 45, 0.55), rgba(12, 18, 30, 0.45));
+    border: 1px solid rgba(180, 205, 255, 0.22);
+    backdrop-filter: blur(10px) saturate(130%);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+}
+
+.term-tooltip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.04) 30%,
+        transparent 55%
+    );
+    pointer-events: none;
+}
+
+.term-wrap:hover .term-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.term-tooltip-row {
+    display: block;
+    margin-top: 0.34rem;
+    padding: 0.28rem 0.46rem;
+    border-left: 3px solid transparent;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.term-tooltip-row b {
+    margin-right: 0.35rem;
+    letter-spacing: 0.02em;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+}
+
+/* Vendor rows inside tooltip */
+.term-tooltip-row--nvidia {
+    color: #ddffd5;
+    background: color-mix(in srgb, var(--vendor-nvidia) 14%, transparent);
+    border-left-color: var(--vendor-nvidia);
+}
+
+.term-tooltip-row--amd {
+    color: #ffd8d6;
+    background: color-mix(in srgb, var(--vendor-amd) 14%, transparent);
+    border-left-color: var(--vendor-amd);
+}
+
+.term-tooltip-row--intel {
+    color: #dbeeff;
+    background: color-mix(in srgb, var(--vendor-intel) 15%, transparent);
+    border-left-color: var(--vendor-intel);
+}
+
+.term-tooltip-row--vulkan {
+    color: #ffe5db;
+    background: color-mix(in srgb, var(--vendor-vulkan) 15%, transparent);
+    border-left-color: var(--vendor-vulkan);
+}
+
+.term-tooltip-row--generic {
+    color: #f1dfc6;
+    background: color-mix(in srgb, var(--vendor-generic) 16%, transparent);
+    border-left-color: var(--vendor-generic);
+}

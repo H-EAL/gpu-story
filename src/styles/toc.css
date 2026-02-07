@@ -1,0 +1,86 @@
+/**
+ * TOC
+ */
+.toc-panel {
+    position: absolute;
+    inset: 0;
+    transition:
+        opacity 220ms ease,
+        transform 220ms ease;
+}
+
+.toc-panel.is-visible {
+    opacity: 1;
+    transform: translateY(-50%);
+    pointer-events: auto;
+}
+
+.toc-panel.is-hidden {
+    opacity: 0;
+    transform: translateY(80px);
+    pointer-events: none;
+}
+
+.toc-col {
+    position: sticky;
+    top: 1rem;
+    align-self: start;
+    display: grid;
+    gap: 0.9rem;
+}
+
+.toc {
+    transform: translateY(-50%);
+    padding: 0.75rem 0.75rem 0.7rem;
+    transition:
+        opacity 1800ms ease,
+        transform 180ms ease;
+}
+
+.toc-title {
+    margin: 0 0 0.55rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9fb8f8;
+    font-weight: 700;
+}
+
+.toc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.22rem;
+}
+
+.toc-item a {
+    display: block;
+    padding: 0.32rem 0.45rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #d6e3ff;
+    font-size: 0.96rem;
+    line-height: 1.35;
+    transition:
+        background-color 150ms ease,
+        color 150ms ease,
+        transform 120ms ease;
+}
+
+.toc-item a:hover {
+    background: rgba(138, 166, 255, 0.16);
+    color: #f2f6ff;
+    transform: translateX(2px);
+}
+
+.toc-item--h3 a {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    color: #b9caef;
+}
+
+.toc-item--active a {
+    color: #f1e5cf;
+    border-left: 3px solid #f1e5cf;
+}

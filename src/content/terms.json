@@ -1,0 +1,212 @@
+{
+    "theater": {
+        "label": "Theater",
+        "nvidia": {
+            "default": "Streaming Multiprocessor",
+            "acr": "SM",
+            "plural": "Streaming Multiprocessors",
+            "ext": "Streaming Multiprocessor (SM)"
+        },
+        "amd": {
+            "default": "Work Group Processor",
+            "acr": "WGP",
+            "plural": "Work Group Processors",
+            "ext": "Work Group Processor (WGP)"
+        },
+        "intel": {
+            "default": "Xe Core",
+            "acr": "Xe",
+            "plural": "Xe Cores",
+            "ext": "Xe Core"
+        }
+    },
+    "dancer": {
+        "label": "Dancer",
+        "nvidia": {
+            "default": "thread",
+            "acr": "T",
+            "plural": "threads",
+            "ext": "CUDA thread"
+        },
+        "amd": {
+            "default": "thread",
+            "acr": "T",
+            "plural": "threads",
+            "ext": "wavefront thread"
+        },
+        "intel": {
+            "default": "thread",
+            "acr": "T",
+            "plural": "threads",
+            "ext": "SIMD thread"
+        }
+    },
+    "squad": {
+        "label": "Squad",
+        "nvidia": {
+            "default": "Warp",
+            "acr": "Warp",
+            "plural": "Warps",
+            "ext": "Warp (32 threads)"
+        },
+        "amd": {
+            "default": "Wavefront",
+            "acr": "Wave",
+            "plural": "Wavefronts",
+            "ext": "Wavefront (32 or 64 threads)"
+        },
+        "intel": {
+            "default": "SIMD group",
+            "acr": "SIMD",
+            "plural": "SIMD groups",
+            "ext": "SIMD execution group"
+        }
+    },
+    "squadSize": {
+        "label": "Squad Size",
+        "nvidia": {
+            "default": "32",
+            "acr": "32",
+            "plural": "warp sizes",
+            "ext": "Warp size (32)"
+        },
+        "amd": {
+            "default": "32 or 64",
+            "acr": "32/64",
+            "plural": "wavefront sizes",
+            "ext": "Wavefront size (32 or 64)"
+        },
+        "intel": {
+            "default": "hardware-dependent",
+            "acr": "var",
+            "plural": "SIMD widths",
+            "ext": "SIMD width (implementation-dependent)"
+        }
+    },
+    "troupe": {
+        "label": "Troupe",
+        "nvidia": {
+            "default": "Thread Block",
+            "acr": "CTA",
+            "plural": "Thread Blocks",
+            "ext": "Thread Block (Cooperative Thread Array, CTA)"
+        },
+        "amd": {
+            "default": "Workgroup",
+            "acr": "WG",
+            "plural": "Workgroups",
+            "ext": "Workgroup"
+        },
+        "intel": {
+            "default": "Thread Group",
+            "acr": "TG",
+            "plural": "Thread Groups",
+            "ext": "Thread Group"
+        }
+    },
+    "stageSpot": {
+        "label": "Stage Spot",
+        "nvidia": {
+            "default": "CUDA Core",
+            "acr": "CUDA",
+            "plural": "CUDA Cores",
+            "ext": "CUDA Core"
+        },
+        "amd": {
+            "default": "Stream Processor",
+            "acr": "SP",
+            "plural": "Stream Processors",
+            "ext": "Stream Processor"
+        },
+        "intel": {
+            "default": "Vector ALU lane",
+            "acr": "ALU",
+            "plural": "Vector ALU lanes",
+            "ext": "EU/Xe-core vector ALU lane"
+        }
+    },
+    "residentSquad": {
+        "label": "Resident Squad",
+        "nvidia": {
+            "default": "Resident Warp",
+            "acr": "res. warp",
+            "plural": "Resident Warps",
+            "ext": "Resident warp"
+        },
+        "amd": {
+            "default": "Resident Wave",
+            "acr": "res. wave",
+            "plural": "Resident Waves",
+            "ext": "Resident wavefront"
+        },
+        "intel": {
+            "default": "resident SIMD group",
+            "acr": "res. SIMD",
+            "plural": "resident SIMD groups",
+            "ext": "Resident thread/SIMD group"
+        }
+    },
+    "sharedMemory": {
+        "label": "Shared Storage",
+        "nvidia": {
+            "default": "Shared Memory",
+            "acr": "SMEM",
+            "plural": "Shared Memory regions",
+            "ext": "Shared Memory"
+        },
+        "amd": {
+            "default": "Local Data Share",
+            "acr": "LDS",
+            "plural": "LDS regions",
+            "ext": "Local Data Share (LDS)"
+        },
+        "intel": {
+            "default": "Shared Local Memory",
+            "acr": "SLM",
+            "plural": "SLM regions",
+            "ext": "Shared Local Memory (SLM)"
+        }
+    },
+    "locker": {
+        "label": "Locker",
+        "nvidia": {
+            "default": "Register",
+            "acr": "reg",
+            "plural": "Registers",
+            "ext": "Register"
+        },
+        "amd": {
+            "default": "VGPR / SGPR",
+            "acr": "VGPR/SGPR",
+            "plural": "VGPRs / SGPRs",
+            "ext": "Vector/Scalar GPR (VGPR/SGPR)"
+        },
+        "intel": {
+            "default": "GRF register",
+            "acr": "GRF",
+            "plural": "GRF registers",
+            "ext": "General Register File register (GRF)"
+        }
+    },
+    "lockerRoom": {
+        "label": "Locker Room",
+        "nvidia": {
+            "default": "SM Register File",
+            "acr": "SM RF",
+            "plural": "SM Register Files",
+            "ext": "Streaming Multiprocessor Register File"
+        },
+        "amd": {
+            "default": "Vector/Scalar Register File",
+            "acr": "VGPR/SGPR RF",
+            "plural": "Vector/Scalar Register Files",
+            "ext": "Vector/Scalar Register File"
+        },
+        "intel": {
+            "default": "GRF file",
+            "acr": "GRF",
+            "plural": "GRF files",
+            "ext": "General Register File (GRF)"
+        }
+    }
+}

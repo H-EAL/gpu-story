@@ -1,0 +1,168 @@
+.gov-poster {
+    max-width: 560px;
+    margin: 1.8rem auto;
+    padding: 1.2rem 1.4rem;
+    border: 2px solid #3a2b1d;
+    background: #f2eadc;
+    color: #2b1c12;
+    border-radius: 6px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    position: relative;
+}
+
+.gov-poster-header {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-weight: 900;
+    font-size: 0.76rem;
+    border-bottom: 1px solid #c4b199;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    text-align: center;
+}
+
+.gov-poster-body {
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.gov-poster-body p {
+    margin: 0.45rem 0;
+}
+
+.gov-poster-footnote {
+    margin-top: 0.8rem;
+    font-size: 0.8rem;
+    color: #5a4533;
+    border-top: 1px dashed #c4b199;
+    padding-top: 0.5rem;
+}
+
+/* WARNING mode */
+.gov-poster--warning {
+    background: #efe0cf;
+    border: 3px solid #7b2c22;
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 2px rgba(123, 44, 34, 0.25);
+}
+
+.gov-poster--warning::before {
+    content: "WARNING";
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    padding: 0.25rem 0.6rem;
+    border: 2px solid #7b2c22;
+    background: #f7e6d3;
+    color: #7b2c22;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    font-size: 0.7rem;
+}
+
+.gov-poster--warning .gov-poster-header {
+    color: #4a1a13;
+}
+
+.gov-poster--warning .gov-poster-body strong {
+    color: #7b2c22;
+}
+
+.gov-form {
+    aspect-ratio: 1/1.1;
+    max-width: 360px;
+    margin: 1.8rem auto;
+
+    display: grid;
+    gap: 0.6rem;
+    place-content: center;
+    text-align: center;
+    align-content: space-between;
+
+    padding: 1.2rem 1.4rem;
+
+    border: 2px solid #3a2b1d;
+    background: #f2eadc;
+    color: #2b1c12;
+    border-radius: 6px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.gov-form strong {
+    color: #7b2c22;
+}
+
+.gov-form-header {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 800;
+    font-size: 0.78rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #c4b199;
+}
+
+.gov-form p {
+    line-height: 1.1rem;
+}
+
+.gov-form-body p {
+    line-height: 2.5rem;
+}
+
+.gov-form-body {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 900;
+    font-size: 1rem;
+    color: #5c3a2b;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.gov-form-footer {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: #5a4533;
+    padding-top: 0.6rem;
+
+    border-top: 1px solid #c4b199;
+}
+
+/***
+ * Signage
+ */
+
+.sign-flipboard {
+    max-width: 260px;
+    margin: 1.2rem auto;
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #2e2e2e;
+    background: linear-gradient(180deg, #202020 0%, #151515 100%);
+    color: #ffe6b0;
+    font-family: "JetBrains Mono", "Consolas", monospace;
+    text-align: center;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 8px 16px rgba(0, 0, 0, 0.35);
+}
+
+.sign-flipboard .sign-title {
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.sign-flipboard .sign-subtitle {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: #f7d889;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 0.35rem;
+}

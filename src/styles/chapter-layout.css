@@ -1,0 +1,29 @@
+.chapter-layout {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+.chapter-left-sidebar {
+    position: sticky;
+    top: 50vh;
+    align-self: self-start;
+}
+
+.chapter-content {
+    justify-items: center;
+}
+
+@media (max-width: 1024px) {
+    .chapter-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .chapter-sidebar {
+        position: static;
+        transform: none;
+    }
+}

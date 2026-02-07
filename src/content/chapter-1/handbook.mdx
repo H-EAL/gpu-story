@@ -1,0 +1,175 @@
+import { Term } from "../../components/Term";
+import { VendorCallout } from "../../components/VendorCallout";
+import { VendorSelector } from "../../components/VendorSelector";
+
+Welcome back dear reader!
+
+Yes, you are back in the cold reality where GPUs are not magical cities but complex pieces of hardware.
+
+The goal of this handbook is to give you a translation dictionary between the story and the real GPU concepts. The idea here is not to go into deep technical details but rather to give you some raw name dropping of actual real-world terms for the different concepts introduced in the story.
+
+### Different continents, different rules
+
+The first tidbit of information introduced here is that CPUs form a more or less unified continent. Their architecture is mostly standardized and the same concepts apply across the board, with some minor variations here and there. Two main architectures dominate the market: x86 (Intel and AMD) and ARM.
+
+GPUs on the other hand are far more fragmented. Hence the choice of representing them as different islands in the story. Each GPU vendor has its own architecture with its own terminology and design choices. They all share some common concepts, but the details can vary significantly.
+
+APIs like Vulkan and DirectX is the Confederation layer that tries to provide a unified interface to all these different architectures, but the underlying hardware differences still exist and can impact performance and behavior.
+
+### Islands, Counties and Cities
+
+The islands obviously represent the different GPU vendors: NVIDIA, AMD, Intel, etc.
+
+Within a single vendor, there are various architectures that have been released over the years, each with its own set of features and improvements. These are represented by the different counties within each island.
+
+Nvidia for example, started with the Celsius architecture back in 1999, then came Kelvin, Rankine, all the way to Blackwell (2024). [See here for the complete list.](https://www.nvidia.com/en-us/technologies/)
+
+AMD started with the TeraScale architecture in 2007, then moved to GCN in 2012 all the way to RDNA4 in 2025. [See here for the complete list.](https://en.wikipedia.org/wiki/List_of_AMD_graphics_processing_units)
+
+These architectures are used in several GPU models, each targeting different market segments (gaming, professional, data center, etc.) and having different performance levels. These are the cities in our story.
+
+The particular city our story takes place in, is the Nvidia Blackwell GB203 also known as the RTX 5080.
+All figures and numbers used in the story are directly taken from the [spec sheet](https://www.techpowerup.com/gpu-specs/geforce-rtx-5080.c4217) of this GPU.
+
+### Vendor Selector
+
+Before diving into the details, and because there is no real standard terminology shared between GPU vendors, let me introduce you to a tool that will help you and me both keep things clear: the vendor selector.
+
+By choosing a specific vendor, all the terms used in the following section will be adapted to match the terminology used by that vendor.
+
+Enough said, pick your poison:
+
+<VendorSelector />
+
+### Theaters
+
+A theater represents a hardware execution block on the GPU called a <Term src="theater" ext />.
+Their amount varies from one GPU model to another.
+
+For example, the _Nvidia RTX 5080_ featured in the story has **84** of them.
+
+Everything we discuss happens within a single <Term src="theater" acr/>.
+
+The GPU simply contains many of them operating independently and in parallel.
+
+<VendorCallout only="amd">
+    A <Term src="theater" ext vendor="amd" /> is composed of two Compute Units (CUs) each. CUs were
+    the main execution unit in previous AMD architectures. However, starting with RDNA2, WGPs have
+    taken over this role.
+</VendorCallout>
+
+### Dancers and Squads
+
+The dancers represent the individual threads that execute the instructions of the shader.
+
+The squads of 32 dancers correspond to <Term src="squad" plural />, which are groups of <Term src="squadSize" /> threads that execute the same instruction simultaneously.
+
+<VendorCallout only="amd">
+    A WGP contains 2 CUs that can act either as a single compute unit or split into two separate
+    CUs. That's why wavefronts can be either 32 or 64 threads depending on the configuration.
+</VendorCallout>
+
+This specific hardware architecture is known as [**SIMT** (**S**ingle **I**nstruction, **M**ultiple **T**hreads)](https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads), and is the cornerstone of GPU parallelism.
+
+### Stages
+
+A stage represents one of the replicated execution partitions inside a <Term src="theater" acr />.
+
+Each partition contains schedulers, arithmetic units, load/store units and other functional blocks.
+
+<VendorCallout only="nvidia">
+    If your ever heard of Tensor Cores, they are also part of the stage arrangement. Tensor Cores
+    are specialized hardware units designed to accelerate matrix operations.
+
+    On the other hand, Ray Tracing Cores are separate hardware units not part of the stage, but rather have their own dedicated execution resources. On the Blackwell architecture, each SM is equipped with one RT Core.
+
+</VendorCallout>
+
+### Backstage Area
+
+The backstage area where dancers doesn't map to an actual piece of hardware but rather to the <Term src="theater" acr />'s ability to hold many more <Term src="squad" plural /> than it can actually execute at once. Like the story reveals, this is possible because not all <Term src="squad" plural /> are active at the same time.
+
+All <Term src="squad" plural /> present in the <Term src="theater" acr /> are called <Term src="residentSquad" plural/>. Only a subset are executing at any moment.
+
+This is exactly where the GPU's grand illusion of massive parallelism comes from. By rapidly switching between available <Term src="residentSquad" plural /> when one stalls (for example, waiting on memory), the GPU keeps its execution units busy.
+Latency hiding is the name of the game here.
+
+### Troupes
+
+The troupes are not a hardware concept per se but rather a software one.
+
+They are called <Term src="troupe" plural /> and can be seen as the resource allocation units on opposition of <Term src="squad" plural /> that are the scheduling units.
+
+All <Term src="squad" plural /> issued from a <Term src="troupe" /> are always resident in a single <Term src="theater" acr />.
+
+### Props and Boxes
+
+Props are mentionned multiple times in the story. They basically represent the inert data that gets moved around from part to part of the city. Throughout the story they will be found stored in different locations.
+A box simply represents a byte.
+
+### Locker Room
+
+Moving on to the locker rooms, they represent the register files which is a large on-chip storage array holding working data for all threads of every <Term src="troupe" /> resident in a <Term src="theater" acr />.
+
+Each thread can use multiple registers depending on its needs, and if there are not enough registers available, the GPU prevents more <Term src="squad" /> from becoming resident, reducing occupancy.
+
+<Term src="locker" plural /> are said to contain 4 boxes each, which represents the typical size of
+a register (32 bits = 4 bytes).
+
+### Shared Storage Room
+
+Finally, the troupe shared storage room represents the <Term src="sharedMemory" /> which is a fast memory area that can be shared among all threads in the same <Term src="troupe" />. The capacity of this memory is limited, and like in the story, it can be fully utilized by a single block possibly to the detriment of occupancy.
+
+And again size is described in boxes (bytes). For the RTX 5080, that's 48 KiB (49'152 bytes).
+
+## Back to the Forge
+
+Now that our mental model is set and backed with concrete mapping to real GPU concepts, we can go one rung up the abstraction ladder: APIs.
+
+We'll focus on the most dreaded one: Vulkan.
+
+From Vulkan's perspective, the show script is a compute shader.
+
+A troupe is called a workgroup.
+
+It is specified directly in the shader code using the `local_size_x`, `local_size_y`, and `local_size_z` layout qualifiers.
+
+The product of these three values gives the size of the workgroup, or in our story, the number of dancers in a troupe.
+
+The squads map to Vulkan subgroups, although this is not necessarily always true as it is mostly implementation-dependent. Subgroups are not explicitly specified in the shader code as it is hardware-dependent.
+
+The exact size of a subgroup can be queried though. It can be found under: `VkPhysicalDeviceSubgroupProperties::subgroupSize`.
+
+## TL;DR
+
+### Equivalence Table
+
+| Story Term     | GPU Concept (NVIDIA)     | GPU Concept (AMD)                                   | Vulkan                                                                    |
+| -------------- | ------------------------ | --------------------------------------------------- | ------------------------------------------------------------------------- |
+| Theater        | Streaming Multiprocessor | Work Group Processor                                | N/A                                                                       |
+| Dancer         | Thread                   | Thread                                              | Invocation                                                                |
+| Squad          | Warp (32 threads)        | Wave/Wavefront (32 or 64 threads)                   | Subgroup                                                                  |
+| Troupe         | Thread Block             | Workgroup                                           | Workgroup                                                                 |
+| Stage Spot     | Cuda Core                | Stream Processor                                    | N/A                                                                       |
+| Backstage Area | Maximum Resident Warps   | Maximum Resident Wavefronts                         | No direct equivalent but related to the Maximum Invocations Per Workgroup |
+| Locker Room    | Register File            | Register File                                       | N/A                                                                       |
+| Locker         | Register                 | [V/S]GPR ([Vector/Scalar] General Purpose Register) | N/A                                                                       |
+| Shared Storage | Shared Memory            | Local Data Share (LDS)                              | `shared` qualifier                                                        |
+
+### Key Takeaways
+
+A GPU is not a magical device that can run an infinite number of threads simultaneously.
+It's a complex piece of hardware with strict constraints that if handled properly can give the _illusion_ of massive parallelism.
+
+A GPU is divided into multiple macro execution units called <Term src="theater" /> that are themselves divided into smaller units holding the actual execution machinery (<Term src="stageSpot" />, etc.).
+
+Each <Term src="theater" /> can hold many more threads than it can execute at once. These are called <Term src="residentSquad" />.
+
+These threads are grouped into <Term src="squad" /> of <Term src="squadSize" /> threads that execute the same instruction simultaneously (SIMT).
+
+Each thread can access a large (compared to a CPU) but still limited amount of registers.
+The total number of registers used by all resident threads directly impacts how many <Term src="squad" /> can be resident at once.
+
+Similarly, every <Term src="residentSquad" /> share the same limited amount of <Term src="sharedMemory" />, which also impacts residency.
+
+Residency is key to achieving high performance on a GPU as it allows hiding memory latency by rapidly switching between many <Term src="squad" />.

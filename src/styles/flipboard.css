@@ -1,0 +1,56 @@
+.flipboard {
+    display: inline-flex;
+    gap: 0.12rem;
+    padding: 0.55rem 0.6rem;
+    border-radius: 8px;
+    background: #171717;
+    border: 1px solid #2e2e2e;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 8px 18px rgba(0, 0, 0, 0.35);
+    font-family: "JetBrains Mono", "Consolas", monospace;
+    margin: auto;
+}
+
+.flipboard-cell {
+    width: 0.9em;
+    height: 1.25em;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #262626 0%, #1b1b1b 100%);
+    border: 1px solid #3a3a3a;
+    position: relative;
+}
+
+.flipboard-cell::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.flipboard-char {
+    color: #ffe6b0;
+    font-size: 0.82em;
+    font-weight: 700;
+    text-shadow: 0 0 6px rgba(255, 190, 90, 0.18);
+    line-height: 1;
+}
+
+.flipboard--req {
+    position: relative;
+}
+
+.flipboard-char.is-hit {
+    color: #00ff73;
+    text-shadow: 0 0 6px rgba(54, 255, 141, 0.35);
+}
+
+.flipboard-char.is-miss {
+    color: #ff0000;
+    text-shadow: 0 0 6px rgba(255, 80, 80, 0.35);
+}
