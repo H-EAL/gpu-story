@@ -7,7 +7,7 @@ import "./styles/index.css";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <BrowserRouter>
+        <BrowserRouter basename="/gpu-story">
             <App />
         </BrowserRouter>
     </StrictMode>,

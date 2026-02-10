@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ComponentType } from "react";
 
 import Handbook from "../components/Handbook";
 import { ChapterNav } from "../components/ChapterNav";
-import { TOC } from "../components/Toc";
+import { TOC } from "../components/TOC";
 
 type NavItem = { label: string; to: string };
 
