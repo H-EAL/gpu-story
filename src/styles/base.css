@@ -49,5 +49,6 @@ h4 {
 }
 
 p {
-    line-height: 3rem;
+    line-height: 2.75rem;
+    padding: 0.5rem 0;
 }
