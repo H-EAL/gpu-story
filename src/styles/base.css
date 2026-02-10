@@ -13,11 +13,24 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 #root {
     margin: 0 auto;
     padding: 2rem;
     font-family: Garamond, serif;
     font-size: x-large;
+    width: 100%;
+}
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 h1,
@@ -51,4 +64,42 @@ h4 {
 p {
     line-height: 2.75rem;
     padding: 0.5rem 0;
+}
+
+@media (max-width: 720px) {
+    #root {
+        padding: 1rem;
+        font-size: large;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 3rem 0 2rem 0;
+        text-align: left;
+    }
+
+    h1 {
+        font-size: 2.1rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.3rem;
+    }
+
+    p {
+        line-height: 2rem;
+        padding: 0.35rem 0;
+    }
 }

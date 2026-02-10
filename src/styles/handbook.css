@@ -4,7 +4,7 @@
 
 .handbook-stage {
     position: relative;
-    height: 220vh;
+    height: 180vh;
 }
 
 .handbook-sticky {
@@ -156,7 +156,7 @@
 */
 .handbook-content {
     max-width: 75ch;
-    margin: 12rem auto 0;
+    margin: 7rem auto 0;
     padding: 2.5rem clamp(1.25rem, 3vw, 3rem);
     color: #e7edf8;
     background: rgba(20, 20, 20, 0.65);
@@ -165,6 +165,9 @@
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
     line-height: 1.8;
     font-family: "IBM Plex Sans", "Inter", system-ui, sans-serif;
+    width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .handbook-content h1,
@@ -205,6 +208,38 @@
     border-collapse: collapse;
     margin: 1.6rem 0;
     font-size: 0.95em;
+}
+
+@media (max-width: 720px) {
+    .handbook-stage {
+        height: 80vh;
+    }
+
+    .handbook-book {
+        --expand: 0;
+        width: 100%;
+    }
+
+    .handbook-cover {
+        --expand: 0;
+        transform: none;
+        width: min(100%, 320px);
+    }
+
+    .handbook-content {
+        max-width: 100%;
+        margin-top: 4rem;
+        padding: 0.9rem 0.75rem;
+        border-width: 1px;
+        border-radius: 10px;
+        background: rgba(20, 20, 20, 0.6);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+    }
+
+    .handbook-content table {
+        display: block;
+        overflow-x: auto;
+    }
 }
 
 .handbook-content th,

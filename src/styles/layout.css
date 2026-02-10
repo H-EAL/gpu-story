@@ -263,6 +263,35 @@
 
 .story-content {
     max-width: 75ch;
+    width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    min-width: 0;
+}
+
+.story-content img,
+.story-content svg,
+.story-content video,
+.story-content canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.story-content pre {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.story-content table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+}
+
+@media (max-width: 720px) {
+    .story-content {
+        max-width: 100%;
+    }
 }
 
 .story-content strong {
