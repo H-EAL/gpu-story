@@ -1,10 +1,7 @@
-import type { CSSProperties } from "react";
-
-function Handbook({ index, title, expand }: { index: number; title: string; expand: number }) {
+function Handbook({ index, title }: { index: number; title: string }) {
     return (
         <figure
             className="handbook-cover"
-            style={{ "--expand": expand } as CSSProperties}
             role="img"
             aria-label={`Handbook volume ${index}: ${title}`}
         >

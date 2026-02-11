@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ComponentType } from "react";
+import { useEffect, useRef, useState, type ComponentType, type CSSProperties } from "react";
 
 import Handbook from "../components/Handbook";
 import { ChapterNav } from "../components/ChapterNav";
@@ -33,35 +33,22 @@ function Chapter({
     const [expandProgress, setExpandProgress] = useState(0);
 
     useEffect(() => {
-        const updateToc = () => {
-            if (!handbookRef.current || !handbookContentRef.current) return;
+        const handbookEl = handbookContentRef.current;
+        if (!handbookEl) return;
 
-            const widgetTop = handbookRef.current.getBoundingClientRect().top;
-            const handbookTop = handbookContentRef.current.getBoundingClientRect().top;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setActiveToc(entry.isIntersecting ? "handbook" : "story");
+            },
+            {
+                root: null,
+                rootMargin: "-35% 0px -55% 0px",
+                threshold: 0,
+            },
+        );
 
-            // Before handbook widget reaches viewport center -> story TOC
-            if (widgetTop > window.innerHeight * 0.45) {
-                setActiveToc("story");
-                return;
-            }
-
-            // Once handbook text starts -> handbook TOC
-            if (handbookTop <= window.innerHeight * 0.5) {
-                setActiveToc("handbook");
-                return;
-            }
-
-            // Between widget and handbook text -> no TOC
-            setActiveToc(null);
-        };
-
-        updateToc();
-        window.addEventListener("scroll", updateToc, { passive: true });
-        window.addEventListener("resize", updateToc);
-        return () => {
-            window.removeEventListener("scroll", updateToc);
-            window.removeEventListener("resize", updateToc);
-        };
+        observer.observe(handbookEl);
+        return () => observer.disconnect();
     }, []);
 
     useEffect(() => {
@@ -82,6 +69,7 @@ function Chapter({
             // grows and shrinks with scroll direction
             const expand = clamp((stickyProgress - 0.2) / 0.8);
 
+            console.log({ stickyProgress, expand });
             setExpandProgress(expand);
         };
 
@@ -90,13 +78,17 @@ function Chapter({
             raf = requestAnimationFrame(update);
         };
 
-        update();
+        raf = requestAnimationFrame(update);
         window.addEventListener("scroll", onScroll, { passive: true });
+        document.addEventListener("scroll", onScroll, { passive: true, capture: true });
         window.addEventListener("resize", onScroll);
 
         return () => {
             cancelAnimationFrame(raf);
             window.removeEventListener("scroll", onScroll);
+            document.removeEventListener("scroll", onScroll, {
+                capture: true,
+            } as AddEventListenerOptions);
             window.removeEventListener("resize", onScroll);
         };
     }, []);
@@ -120,8 +112,11 @@ function Chapter({
                 </article>
 
                 <section ref={handbookRef} className="handbook-stage">
-                    <div className="handbook-sticky">
-                        <Handbook index={volume} title={title} expand={expandProgress} />
+                    <div
+                        className="handbook-sticky"
+                        style={{ "--expand": expandProgress } as CSSProperties}
+                    >
+                        <Handbook index={volume} title={title} />
                     </div>
                 </section>
 
