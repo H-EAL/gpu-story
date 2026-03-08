@@ -1,25 +1,17 @@
-:root {
+@theme {
     /* Brand / vendor */
-    --vendor-nvidia: #76b900;
-    --vendor-amd: #ed1c24;
-    --vendor-intel: #0071c5;
-    --vendor-vulkan: #f04e23;
-    --vendor-generic: #8a6e4a;
+    --color-vendor-nvidia: rgb(118 185 0);
+    --color-vendor-amd: rgb(237 28 36);
+    --color-vendor-intel: rgb(0 113 197);
+    --color-vendor-vulkan: rgb(240 78 35);
+    --color-vendor-generic: rgb(138 110 74);
+}
 
-    /* Ink / surfaces */
-    --ink-strong: #f4dfbe;
-    --ink-body: #dbc8aa;
-    --ink-soft: #f3e2c6;
-    --panel-bg: #1f1711;
-    --panel-bg-alt: #24180f;
-    --panel-border: #6b5238;
-
-    /* Effects */
-    --shadow-md: 0 10px 24px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 18px 36px rgba(0, 0, 0, 0.45);
-
-    /* Radius */
-    --r-sm: 8px;
-    --r-md: 10px;
-    --r-lg: 12px;
+/* Aliases used by plain CSS (term.css, vendor-selector.css) */
+:root {
+    --vendor-nvidia: var(--color-vendor-nvidia);
+    --vendor-amd: var(--color-vendor-amd);
+    --vendor-intel: var(--color-vendor-intel);
+    --vendor-vulkan: var(--color-vendor-vulkan);
+    --vendor-generic: var(--color-vendor-generic);
 }

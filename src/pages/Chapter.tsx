@@ -1,44 +1,52 @@
-import { useEffect, useRef, useState, type ComponentType, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 
 import Handbook from "../components/Handbook";
-import { ChapterNav } from "../components/ChapterNav";
 import { TOC } from "../components/TOC";
-
-type NavItem = { label: string; to: string };
-
-function clamp(value: number, min = 0, max = 1) {
-    return Math.min(max, Math.max(min, value));
-}
 
 function Chapter({
     StoryText,
     HandbookText,
     volume,
     title,
-    prev,
-    next,
 }: {
     StoryText: ComponentType;
     HandbookText: ComponentType;
     volume: number;
     title: string;
-    prev?: NavItem;
-    next?: NavItem;
 }) {
     const storyContentRef = useRef<HTMLDivElement | null>(null);
     const handbookRef = useRef<HTMLDivElement | null>(null);
     const handbookContentRef = useRef<HTMLDivElement | null>(null);
 
-    const [activeToc, setActiveToc] = useState<"story" | "handbook" | null>("story");
-    const [expandProgress, setExpandProgress] = useState(0);
+    const [activeSection, setActiveSection] = useState<"story" | "handbook" | "cover" | null>(
+        "story",
+    );
 
     useEffect(() => {
-        const handbookEl = handbookContentRef.current;
-        if (!handbookEl) return;
+        const sections = [
+            { key: "story", el: storyContentRef.current },
+            { key: "cover", el: handbookRef.current },
+            { key: "handbook", el: handbookContentRef.current },
+        ].filter((s): s is { key: string; el: HTMLDivElement } => Boolean(s.el));
+
+        if (!sections.length) return;
+
+        const ratioByKey = new Map(sections.map((s) => [s.key, 0]));
 
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                setActiveToc(entry.isIntersecting ? "handbook" : "story");
+            (entries) => {
+                for (const entry of entries) {
+                    const key = sections.find((s) => s.el === entry.target)?.key;
+                    if (!key) continue;
+                    ratioByKey.set(key, entry.isIntersecting ? entry.intersectionRatio : 0);
+                }
+
+                const next = [...ratioByKey.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+                if (next) {
+                    setActiveSection(
+                        next === "story" ? "story" : ("handbook" as "story" | "handbook" | "cover"),
+                    );
+                }
             },
             {
                 root: null,
@@ -47,85 +55,44 @@ function Chapter({
             },
         );
 
-        observer.observe(handbookEl);
+        sections.forEach((s) => observer.observe(s.el));
+
         return () => observer.disconnect();
     }, []);
 
-    useEffect(() => {
-        let raf = 0;
-
-        const update = () => {
-            if (!storyContentRef.current || !handbookRef.current) {
-                return;
-            }
-
-            const rect = handbookRef.current.getBoundingClientRect();
-            const vh = window.innerHeight;
-            const track = rect.height - vh;
-
-            // 0..1 only once the stage has reached full viewport coverage
-            const stickyProgress = track > 0 ? clamp(-rect.top / track) : 0;
-
-            // grows and shrinks with scroll direction
-            const expand = clamp((stickyProgress - 0.2) / 0.8);
-
-            console.log({ stickyProgress, expand });
-            setExpandProgress(expand);
-        };
-
-        const onScroll = () => {
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(update);
-        };
-
-        raf = requestAnimationFrame(update);
-        window.addEventListener("scroll", onScroll, { passive: true });
-        document.addEventListener("scroll", onScroll, { passive: true, capture: true });
-        window.addEventListener("resize", onScroll);
-
-        return () => {
-            cancelAnimationFrame(raf);
-            window.removeEventListener("scroll", onScroll);
-            document.removeEventListener("scroll", onScroll, {
-                capture: true,
-            } as AddEventListenerOptions);
-            window.removeEventListener("resize", onScroll);
-        };
-    }, []);
-
     return (
-        <main className="chapter-layout">
-            <aside className="chapter-left-sidebar">
-                <div className={`toc-panel ${activeToc === "story" ? "is-visible" : "is-hidden"}`}>
-                    <TOC containerRef={storyContentRef} refreshKey={`story-${volume}`} />
-                </div>
-                <div
-                    className={`toc-panel ${activeToc === "handbook" ? "is-visible" : "is-hidden"}`}
-                >
-                    <TOC containerRef={handbookContentRef} refreshKey={`handbook-${volume}`} />
-                </div>
+        <main className="relative min-h-screen">
+            <aside className="hidden lg:block fixed left-0 top-0 h-screen w-64 overflow-y-auto border-r border-zinc-800/60 bg-zinc-950/70 backdrop-blur px-4 py-6">
+                <TOC
+                    containerRef={
+                        activeSection === "story" ? storyContentRef : handbookContentRef
+                    }
+                    refreshKey={activeSection}
+                    index={volume}
+                />
             </aside>
 
-            <section className="chapter-content">
-                <article id="story" ref={storyContentRef} className="story-content">
-                    <StoryText />
-                </article>
-
-                <section ref={handbookRef} className="handbook-stage">
-                    <div
-                        className="handbook-sticky"
-                        style={{ "--expand": expandProgress } as CSSProperties}
+            <div className="lg:px-64 prose md:prose-lg lg:prose-xl prose-stone dark:prose-invert max-w-none">
+                <section className="mx-auto w-full max-w-[80ch] px-6 py-10">
+                    <article id="story" ref={storyContentRef} className="font-serif">
+                        <StoryText />
+                    </article>
+                    <section
+                        id="cover"
+                        ref={handbookRef}
+                        className="not-prose h-screen content-center justify-items-center"
                     >
                         <Handbook index={volume} title={title} />
-                    </div>
+                    </section>
+                    <article
+                        id="handbook"
+                        ref={handbookContentRef}
+                        className="prose-yellow font-sans"
+                    >
+                        <HandbookText />
+                    </article>
                 </section>
-
-                <article id="handbook" ref={handbookContentRef} className="handbook-content">
-                    <HandbookText />
-                </article>
-
-                <ChapterNav prev={prev} next={next} current={`Chapter ${volume}`} />
-            </section>
+            </div>
         </main>
     );
 }

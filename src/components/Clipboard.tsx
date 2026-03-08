@@ -5,7 +5,7 @@ type ClipboardProps = {
     children: ReactNode;
 };
 
-export function Clipboard({ title = "SHOW PROGRESS REPORT", children }: ClipboardProps) {
+export function Clipboard({ title = "SQUAD PROGRESS REPORT", children }: ClipboardProps) {
     return (
         <figure className="clipboard" role="img" aria-label={title}>
             <div className="clipboard-clip" />

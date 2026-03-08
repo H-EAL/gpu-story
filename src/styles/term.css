@@ -54,19 +54,19 @@
 
 /* Active vendor badge color */
 .term--nvidia {
-    --term-accent: var(--vendor-nvidia);
+    --term-accent: var(--color-vendor-nvidia);
 }
 .term--amd {
-    --term-accent: var(--vendor-amd);
+    --term-accent: var(--color-vendor-amd);
 }
 .term--intel {
-    --term-accent: var(--vendor-intel);
+    --term-accent: var(--color-vendor-intel);
 }
 .term--vulkan {
-    --term-accent: var(--vendor-vulkan);
+    --term-accent: var(--color-vendor-vulkan);
 }
 .term--generic {
-    --term-accent: var(--vendor-generic);
+    --term-accent: var(--color-vendor-generic);
 }
 
 /**

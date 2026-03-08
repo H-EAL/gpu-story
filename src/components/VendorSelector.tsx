@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { VendorContext, type Vendor } from "../contexts/VendorContext";
 
 const vendors: Vendor[] = ["nvidia", "amd", "intel"];
@@ -8,7 +8,6 @@ export function VendorSelector() {
     const anchorRef = useRef<HTMLDivElement | null>(null);
 
     const [isStuck, setIsStuck] = useState(false);
-    const [shiftX, setShiftX] = useState(0);
 
     useEffect(() => {
         const update = () => {
@@ -21,8 +20,6 @@ export function VendorSelector() {
             setIsStuck(stuckNow);
 
             // compute how far left to slide once stuck
-            const targetLeft = 16; // left docking position in viewport
-            setShiftX(Math.max(0, rect.left - targetLeft));
         };
 
         update();
@@ -37,23 +34,44 @@ export function VendorSelector() {
     if (!ctx) return null;
 
     return (
-        <div ref={anchorRef} className={`vendor-anchor ${isStuck ? "is-stuck" : ""}`}>
-            <label
-                className={`vendor-selector vendor-selector--${ctx.vendor}`}
-                style={{ "--dock-shift": `${shiftX}px` } as CSSProperties}
-            >
-                <span>Vendor:</span>
-                <select
-                    value={ctx.vendor}
-                    onChange={(e) => ctx.setVendor(e.target.value as Vendor)}
-                >
-                    {vendors.map((v) => (
-                        <option key={v} value={v}>
-                            {v.toUpperCase()}
-                        </option>
-                    ))}
-                </select>
-            </label>
+        <div
+            ref={anchorRef}
+            className={`
+                font-light font-stretch-expanded
+                backdrop-blur-lg rounded-b-3xl border-zinc-900/50
+                bg-[linear-gradient(0deg,rgb(var(--vendor-${ctx.vendor})_/_0.4),transparent)]
+                z-100 w-full p-2 ${isStuck ? "sticky top-0" : ""}`}
+        >
+            <VendorSelect />
         </div>
+    );
+}
+
+function VendorSelect() {
+    const ctx = useContext(VendorContext);
+
+    if (!ctx) return null;
+
+    return (
+        <label className={`justify-center flex w-full`}>
+            <span>Vendor:</span>
+            <select
+                className={`
+                    appearance-none border-[10px_solid_rgb(var(--vendor-${ctx.vendor})]
+                    rounded ml-2 px-2 py-1 text-sm
+                `}
+                style={
+                    { backgroundColor: `var(--color-vendor-${ctx.vendor})` } as React.CSSProperties
+                }
+                value={ctx.vendor}
+                onChange={(e) => ctx.setVendor(e.target.value as Vendor)}
+            >
+                {vendors.map((v) => (
+                    <option key={v} value={v}>
+                        {v.toUpperCase()}
+                    </option>
+                ))}
+            </select>
+        </label>
     );
 }
