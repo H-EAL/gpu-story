@@ -1,5 +1,6 @@
 import { useEffect, useState, type RefObject } from "react";
 import { CHAPTERS } from "../content/chapters";
+import { Link } from "react-router-dom";
 
 type TocItem = { id: string; text: string; level: number };
 
@@ -121,20 +122,20 @@ export function TOC({
         <nav className="flex flex-col h-full gap-4 font-mono text-xs uppercase">
             {/* ── Home icon + prev chapter ── */}
             <div className="flex gap-2">
-                <a
-                    href="/"
+                <Link
+                    to="/"
                     aria-label="Home"
                     className={`border ${t.border} px-3 py-2 ${t.text} transition-colors duration-150 ${t.borderHover} ${t.textHover}`}
                 >
                     ⌂
-                </a>
+                </Link>
                 {index > 1 && (
-                    <a
-                        href={`/chapter-${index - 1}`}
+                    <Link
+                        to={`/chapter-${index - 1}`}
                         className={`flex-1 border ${t.border} px-3 py-2 tracking-[0.2em] ${t.text} transition-colors duration-150 ${t.borderHover} ${t.textHover} text-center`}
                     >
                         ← Ch. {index - 1}
-                    </a>
+                    </Link>
                 )}
             </div>
 
@@ -185,12 +186,12 @@ export function TOC({
 
             {/* ── Next chapter nav ── */}
             {index < CHAPTERS.length && (
-                <a
-                    href={`/chapter-${index + 1}`}
+                <Link
+                    to={`/chapter-${index + 1}`}
                     className="block border border-stage-border-lo px-3 py-2 tracking-[0.2em] text-stage-tertiary transition-colors duration-150 hover:border-stage-border-hi hover:text-stage-secondary text-center"
                 >
                     Ch. {index + 1} →
-                </a>
+                </Link>
             )}
         </nav>
     );
