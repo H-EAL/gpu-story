@@ -62,19 +62,44 @@ function Chapter({
 
     return (
         <main className="relative min-h-screen">
-            <aside className="hidden lg:block fixed left-0 top-0 h-screen w-64 overflow-y-auto border-r border-zinc-800/60 bg-zinc-950/70 backdrop-blur px-4 py-6">
+            <aside className="hidden lg:block fixed left-0 top-0 h-screen w-64 overflow-y-auto border-r border-stage-border-lo bg-stage-base px-4 py-6">
                 <TOC
-                    containerRef={
-                        activeSection === "story" ? storyContentRef : handbookContentRef
-                    }
+                    containerRef={activeSection === "story" ? storyContentRef : handbookContentRef}
                     refreshKey={activeSection}
                     index={volume}
                 />
             </aside>
 
-            <div className="lg:px-64 prose md:prose-lg lg:prose-xl prose-stone dark:prose-invert max-w-none">
+            {/*
+                Prose color overrides — no dark:prose-invert, we set everything manually
+                to match the warm amber / cool blue palette.
+                Story headings: amber  |  Handbook headings: steel-blue
+            */}
+            <div
+                className="lg:px-64 prose lg:prose-xl max-w-none
+                [--tw-prose-body:#ddd0b8]
+                [--tw-prose-lead:#c8b890]
+                [--tw-prose-bold:#fff2cc]
+                [--tw-prose-links:#cc9040]
+                [--tw-prose-bullets:#b07830]
+                [--tw-prose-counters:#b07830]
+                [--tw-prose-hr:#3c2410]
+                [--tw-prose-quotes:#c8b890]
+                [--tw-prose-quote-borders:#553018]
+                [--tw-prose-code:#e8b860]
+                [--tw-prose-pre-bg:#1a1208]
+                [--tw-prose-pre-code:#ddd0b8]
+                [--tw-prose-th-borders:#553018]
+                [--tw-prose-td-borders:#3c2410]
+            "
+            >
                 <section className="mx-auto w-full max-w-[80ch] px-6 py-10">
-                    <article id="story" ref={storyContentRef} className="font-serif">
+                    {/* Story — amber headings, serif body for novel feel */}
+                    <article
+                        id="story"
+                        ref={storyContentRef}
+                        className="font-serif [--tw-prose-headings:#e8b860]"
+                    >
                         <StoryText />
                     </article>
                     <section
@@ -84,10 +109,11 @@ function Chapter({
                     >
                         <Handbook index={volume} title={title} />
                     </section>
+                    {/* Handbook — steel-blue headings, sans-serif for reference feel */}
                     <article
                         id="handbook"
                         ref={handbookContentRef}
-                        className="prose-yellow font-sans"
+                        className="font-sans text-[#b8ccd8] [--tw-prose-bold:#d8eaf4] [--tw-prose-headings:#7ab0cc] [--tw-prose-links:#7ab0cc] [--tw-prose-code:#7ab0cc] [--tw-prose-pre-code:#b8ccd8] [--tw-prose-bullets:#4a7a9b] [--tw-prose-counters:#4a7a9b] [--tw-prose-quotes:#8aaabb] [--tw-prose-quote-borders:#2e5470]"
                     >
                         <HandbookText />
                     </article>

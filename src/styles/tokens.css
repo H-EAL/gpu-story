@@ -5,6 +5,23 @@
     --color-vendor-intel: rgb(0 113 197);
     --color-vendor-vulkan: rgb(240 78 35);
     --color-vendor-generic: rgb(138 110 74);
+
+    /* Stage UI — amber departure-board palette */
+    --color-stage-base:      #100c06; /* page background                  */
+    --color-stage-hover:     #1a1208; /* row hover background              */
+    --color-stage-border-lo: #3c2410; /* dividers / subtle borders         */
+    --color-stage-border-hi: #553018; /* button / medium borders           */
+    --color-stage-subtle:    #8c5c22; /* footer icons resting              */
+    --color-stage-tertiary:  #b07830; /* metadata / labels                 */
+    --color-stage-secondary: #cc9040; /* secondary text                    */
+    --color-stage-primary:   #e8b860; /* chapter titles                    */
+    --color-stage-bright:    #fff2cc; /* hover / emphasis                  */
+
+    /* Stage UI — cool steel-blue counterpoint (handbook / reference) */
+    --color-stage-cool-border: #1c3548; /* badge border resting             */
+    --color-stage-cool-border-hi: #2e5470; /* badge border hover            */
+    --color-stage-cool:      #4a7a9b; /* badge text resting  (~4:1)        */
+    --color-stage-cool-hi:   #7ab0cc; /* badge text hover    (~8.7:1)      */
 }
 
 /* Aliases used by plain CSS (term.css, vendor-selector.css) */
