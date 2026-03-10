@@ -54,7 +54,7 @@ export function FlipBoard({ value, width = 18, speedMs = 0 }: FlipBoardProps) {
     return (
         <div className="flipboard" role="status" aria-label={value}>
             {current.split("").map((ch, i) => (
-                <span key={`${i}-${ch}`} className="flipboard-cell">
+                <span key={i} className="flipboard-cell">
                     <span className="flipboard-char">{ch}</span>
                 </span>
             ))}
@@ -134,7 +134,7 @@ export function FlipBoardRequests({ width = 24, speedMs = 24, intervalMs = 900 }
                 const isStatus = i >= target.statusStart && i < target.statusEnd;
                 const statusClass = isStatus ? `is-${target.status.toLowerCase()}` : "";
                 return (
-                    <span key={`${i}-${ch}`} className="flipboard-cell">
+                    <span key={i} className="flipboard-cell">
                         <span className={`flipboard-char ${statusClass}`}>{ch}</span>
                     </span>
                 );

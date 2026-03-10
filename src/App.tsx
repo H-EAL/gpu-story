@@ -28,6 +28,7 @@ function App() {
                         path={`/chapter-${index + 1}`}
                         element={
                             <Chapter
+                                key={index + 1}
                                 StoryText={chapter.StoryText}
                                 HandbookText={chapter.HandbookText}
                                 volume={index + 1}

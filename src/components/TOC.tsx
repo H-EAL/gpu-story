@@ -93,8 +93,6 @@ export function TOC({
         setActiveId(id);
     };
 
-    if (!items.length) return null;
-
     const isHandbook = refreshKey === "handbook";
 
     // Warm amber for story, cool blue for handbook
@@ -151,27 +149,29 @@ export function TOC({
             )}
 
             {/* ── TOC items ── */}
-            <ul className={`grow flex flex-col justify-center gap-2 border-t ${t.divider} pt-4`}>
-                {items.map((item) => (
-                    <li key={item.id} className={item.level === 3 ? "pl-3" : ""}>
-                        <a
-                            href={`#${item.id}`}
-                            onClick={(event) => handleClick(event, item.id)}
-                            className={[
-                                "block tracking-[0.15em] leading-snug transition-colors duration-150",
-                                activeId === item.id
-                                    ? t.active
-                                    : `${t.text} ${t.textHover}`,
-                            ].join(" ")}
-                        >
-                            {activeId === item.id && (
-                                <span className={`mr-1 ${t.marker}`}>›</span>
-                            )}
-                            {item.text}
-                        </a>
-                    </li>
-                ))}
-            </ul>
+            {items.length > 0 && (
+                <ul className={`grow flex flex-col justify-center gap-2 border-t ${t.divider} pt-4`}>
+                    {items.map((item) => (
+                        <li key={item.id} className={item.level === 3 ? "pl-3" : ""}>
+                            <a
+                                href={`#${item.id}`}
+                                onClick={(event) => handleClick(event, item.id)}
+                                className={[
+                                    "block tracking-[0.15em] leading-snug transition-colors duration-150",
+                                    activeId === item.id
+                                        ? t.active
+                                        : `${t.text} ${t.textHover}`,
+                                ].join(" ")}
+                            >
+                                {activeId === item.id && (
+                                    <span className={`mr-1 ${t.marker}`}>›</span>
+                                )}
+                                {item.text}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )}
 
             {/* ── Cross-section jump ── */}
             {refreshKey === "story" && (
