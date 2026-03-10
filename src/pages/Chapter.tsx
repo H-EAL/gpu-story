@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type ComponentType } from "react";
 
 import Handbook from "../components/Handbook";
 import { TOC } from "../components/TOC";
+import { CHAPTERS } from "../content/chapters";
+import { Link } from "react-router-dom";
 
 function Chapter({
     StoryText,
@@ -119,6 +121,30 @@ function Chapter({
                     </article>
                 </section>
             </div>
+
+            {/* ── Chapter-end navigation ── */}
+            <nav className="lg:pl-64 border-t border-stage-border-lo">
+                <div className="mx-auto w-full max-w-[80ch] px-6 py-10 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-[0.2em]">
+                    <Link
+                        to="/"
+                        className="text-stage-subtle transition-colors hover:text-stage-tertiary"
+                    >
+                        ← Programme
+                    </Link>
+                    {volume < CHAPTERS.length ? (
+                        <Link
+                            to={`/chapter-${volume + 1}`}
+                            className="flex items-center gap-3 border border-stage-border-lo px-4 py-2.5 text-stage-tertiary transition-colors hover:border-stage-border-hi hover:text-stage-primary"
+                        >
+                            <span className="text-stage-subtle">Next</span>
+                            {CHAPTERS[volume].storyTitle}
+                            <span className="text-stage-subtle">→</span>
+                        </Link>
+                    ) : (
+                        <span className="text-stage-subtle">End of series</span>
+                    )}
+                </div>
+            </nav>
         </main>
     );
 }
