@@ -1,11 +1,10 @@
-import type { ReactNode } from "react";
 import { useContext } from "react";
+import type { ReactNode } from "react";
 import { VendorContext, type Vendor } from "../contexts/VendorContext";
 
 type VendorCalloutProps = {
     only?: Vendor;
     exclude?: Vendor[];
-    title?: string;
     children: ReactNode;
 };
 
@@ -25,12 +24,17 @@ export function VendorCallout({ only, exclude, children }: VendorCalloutProps) {
     if (only && only !== vendor) return null;
     if (exclude && exclude.includes(vendor)) return null;
 
-    const scopeLabel = only ? vendorLabel(only) : vendorLabel(vendor);
+    const calloutVendor = only ?? vendor;
 
     return (
-        <aside className={`vendor-callout vendor-callout--${vendor}`} role="note">
-            <p className="vendor-callout-eyebrow">{scopeLabel} only</p>
+        <details
+            className={`vendor-callout vendor-callout--${calloutVendor}`}
+            open
+        >
+            <summary className="vendor-callout-summary">
+                <span className="vendor-callout-eyebrow">{vendorLabel(calloutVendor)}</span>
+            </summary>
             <div className="vendor-callout-body">{children}</div>
-        </aside>
+        </details>
     );
 }

@@ -14,7 +14,7 @@ function ChapterRow({ index }: { index: number }) {
                 aria-label={`Read chapter ${index}: ${chapter.storyTitle}`}
             />
 
-            <div className="pointer-events-none relative flex items-center gap-5 border-t border-stage-border-lo py-5 transition-colors duration-150 group-hover:bg-stage-hover">
+            <div className="pointer-events-none relative flex items-center gap-6 border-t border-stage-border-lo px-2 py-5 transition-colors duration-150 group-hover:bg-stage-hover">
                 {/* Row number */}
                 <div className="shrink-0">
                     <FlipBoard value={String(index).padStart(2, "0")} width={2} speedMs={3} />
@@ -40,20 +40,30 @@ function ChapterRow({ index }: { index: number }) {
 function Home() {
     return (
         <div className="min-h-screen bg-stage-base flex flex-col">
-            <main className="mx-auto w-full max-w-xl flex-1 px-6 py-20 flex flex-col gap-14">
+            <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-20 flex flex-col gap-14">
                 {/* ── Board header ── */}
-                <header className="flex flex-col gap-4">
+                <header className="flex flex-col gap-5">
                     <FlipBoard value="THE GPU SHOWRUNNER CHRONICLES" width={30} speedMs={3} />
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-stage-secondary text-center">
-                        GPU Architecture Explained
-                    </p>
+                    <div className="flex items-center gap-4">
+                        <span className="h-px flex-1 bg-stage-border-lo" />
+                        <p className="font-mono text-xs uppercase tracking-[0.28em] text-stage-secondary">
+                            GPU Architecture Explained
+                        </p>
+                        <span className="h-px flex-1 bg-stage-border-lo" />
+                    </div>
                 </header>
 
                 {/* ── Programme ── */}
                 <section>
-                    <span className="font-mono text-xs uppercase tracking-[0.3em] text-stage-tertiary">
-                        Programme
-                    </span>
+                    <div className="flex items-baseline gap-3 mb-1">
+                        <span className="font-mono text-xs uppercase tracking-[0.3em] text-stage-tertiary">
+                            Programme
+                        </span>
+                        <span className="h-px flex-1 bg-stage-border-lo" />
+                        <span className="font-mono text-xs tabular-nums text-stage-subtle">
+                            {CHAPTERS.length} chapters
+                        </span>
+                    </div>
                     <ul>
                         {CHAPTERS.map((_, i) => (
                             <ChapterRow key={i + 1} index={i + 1} />

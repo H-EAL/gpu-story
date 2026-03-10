@@ -1,66 +1,60 @@
 .clipboard {
-    display: inline-block;
+    display: block;
     position: relative;
-    width: min(360px, 100%);
-    margin: 1.5rem auto;
+    width: min(320px, 100%);
+    margin: 2rem auto;
     aspect-ratio: 9 / 12;
-    background-color: #ff77002c;
     padding: 0.3rem 0.5rem 0.5rem;
-    border-radius: 6px;
-    box-shadow: outset 3px 3px 0 rgba(255, 255, 255, 0.2);
 }
 
 .clipboard-clip {
     position: absolute;
-    top: -12px;
+    top: -11px;
     left: 50%;
     transform: translateX(-50%);
-    width: 88px;
-    height: 24px;
-    background: linear-gradient(180deg, #666, #444);
-    border-radius: 8px 8px 4px 4px;
-    border: 1px solid #2f2f2f;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    width: 72px;
+    height: 22px;
+    background: linear-gradient(180deg, #555 0%, #333 100%);
+    border-radius: 6px 6px 3px 3px;
+    border: 1px solid #222;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.clipboard-clip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 10px;
+    border-radius: 999px;
+    border: 1.5px solid #222;
+    background: #3a3a3a;
 }
 
 .clipboard-sheet {
-    background: #f4efe4;
-    border: 1px solid #d6cbb7;
+    background: #f5efe2;
+    border: 1px solid #d6c8ae;
     padding: 1.1rem 1.2rem 1.4rem;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
     height: 100%;
 }
 
 .clipboard-title {
     text-align: center;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    color: #3a2a1d;
-    margin-bottom: 0.8rem;
-}
-
-.clipboard-table {
-    display: grid;
-    gap: 0.6rem;
-}
-
-.clipboard-row {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px dashed #c8bba6;
-    padding-bottom: 0.25rem;
-}
-
-.clipboard-label {
-    color: #4a3a2b;
-    font-weight: 600;
-}
-
-.clipboard-value {
-    color: #2e2116;
-    font-weight: 700;
+    color: #2e1e10;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #cbbfa8;
 }
 
 .clipboard-body > *:first-child {
@@ -74,26 +68,47 @@
 .clipboard-body table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
 }
 
 .clipboard-body th,
 .clipboard-body td {
     text-align: left;
-    padding: 0.4rem 0.35rem;
+    padding: 0.38rem 0.35rem;
     border-bottom: 1px dashed #c8bba6;
     height: 2rem;
 }
 
 .clipboard-body th {
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #5b4634;
+    color: #5b4530;
+    font-weight: 700;
 }
 
 .clipboard-body td {
-    color: #2e2116;
+    color: #2e1e10;
     font-weight: 500;
+    font-family: cursive;
+}
+
+.clipboard-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #c8bba6;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.clipboard-label {
+    color: #4a3625;
+    font-weight: 600;
+    font-size: 0.88rem;
+}
+
+.clipboard-value {
+    color: #2e1e10;
+    font-weight: 700;
     font-family: cursive;
 }

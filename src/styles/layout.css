@@ -1,54 +1,92 @@
 
 .vendor-callout {
-    margin: 1.4rem 0;
-    padding: 0.95rem 1rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-left: 4px solid var(--vendor-generic);
-    background: rgba(255, 255, 255, 0.03);
+    margin: 1.6rem 0;
+    border: 1px solid #1c3548;
+    border-left: 3px solid #4a7a9b;
+    background: #060e17;
+}
+
+/* Summary row — always visible */
+.vendor-callout-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.vendor-callout-summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Chevron */
+.vendor-callout-summary::after {
+    content: "›";
+    margin-left: auto;
+    font-size: 1rem;
+    line-height: 1;
+    opacity: 0.4;
+    transition: transform 180ms ease, opacity 180ms ease;
+    transform: rotate(0deg);
+}
+
+.vendor-callout[open] .vendor-callout-summary::after {
+    transform: rotate(90deg);
+    opacity: 0.7;
 }
 
 .vendor-callout-eyebrow {
     display: inline-flex;
     align-items: center;
-    padding: 0.2rem 0.55rem;
-    border-radius: 999px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
+    padding: 0.12rem 0.45rem;
+    font-family: ui-monospace, "JetBrains Mono", monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin: 0 0 0.45rem;
     border: 1px solid currentColor;
 }
 
-.vendor-callout-title {
-    margin: 0 0 0.45rem;
-    font-weight: 700;
+/* Body — only visible when open */
+.vendor-callout-body {
+    padding: 0.7rem 1.1rem 0.9rem;
+    border-top: 1px solid #1c3548;
+    animation: callout-open 200ms ease;
 }
 
-/* Vendor emphasis */
+@keyframes callout-open {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Vendor accent colors */
 .vendor-callout--nvidia {
-    border-left-color: var(--vendor-nvidia);
+    border-left-color: var(--color-vendor-nvidia);
 }
 .vendor-callout--nvidia .vendor-callout-eyebrow {
-    color: #d8ffd1;
-    background: rgba(118, 185, 0, 0.16);
+    color: var(--color-vendor-nvidia);
 }
 
 .vendor-callout--amd {
-    border-left-color: var(--vendor-amd);
+    border-left-color: var(--color-vendor-amd);
 }
 .vendor-callout--amd .vendor-callout-eyebrow {
-    color: #ffd8d2;
-    background: rgba(237, 28, 36, 0.16);
+    color: var(--color-vendor-amd);
 }
 
 .vendor-callout--intel {
-    border-left-color: var(--vendor-intel);
+    border-left-color: var(--color-vendor-intel);
 }
 .vendor-callout--intel .vendor-callout-eyebrow {
-    color: #d7ebff;
-    background: rgba(0, 113, 197, 0.16);
+    color: var(--color-vendor-intel);
 }
 
 .story-content {

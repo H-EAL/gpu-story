@@ -6,22 +6,14 @@ const vendors: Vendor[] = ["nvidia", "amd", "intel"];
 export function VendorSelector() {
     const ctx = useContext(VendorContext);
     const anchorRef = useRef<HTMLDivElement | null>(null);
-
     const [isStuck, setIsStuck] = useState(false);
 
     useEffect(() => {
         const update = () => {
             if (!anchorRef.current) return;
-
             const rect = anchorRef.current.getBoundingClientRect();
-            const stickyTop = 16; // must match CSS top: 1rem
-            const stuckNow = window.scrollY > 0 && rect.top <= stickyTop + 1;
-
-            setIsStuck(stuckNow);
-
-            // compute how far left to slide once stuck
+            setIsStuck(window.scrollY > 0 && rect.top <= 17);
         };
-
         update();
         window.addEventListener("scroll", update, { passive: true });
         window.addEventListener("resize", update);
@@ -36,42 +28,42 @@ export function VendorSelector() {
     return (
         <div
             ref={anchorRef}
-            className={`
-                font-light font-stretch-expanded
-                backdrop-blur-lg rounded-b-3xl border-zinc-900/50
-                bg-[linear-gradient(0deg,rgb(var(--vendor-${ctx.vendor})_/_0.4),transparent)]
-                z-100 w-full p-2 ${isStuck ? "sticky top-0" : ""}`}
+            className={`not-prose my-8${isStuck ? " sticky top-4 z-40" : ""}`}
         >
-            <VendorSelect />
+            <div className="inline-flex flex-col gap-2 border border-stage-cool-border bg-[#080f18] px-5 py-4 font-mono">
+                <span className="text-[0.5rem] uppercase tracking-[0.3em] text-stage-cool/50">
+                    Select Vendor
+                </span>
+                <div className="flex">
+                    {vendors.map((v, i) => {
+                        const active = ctx.vendor === v;
+                        return (
+                            <button
+                                key={v}
+                                onClick={() => ctx.setVendor(v)}
+                                className={[
+                                    "px-5 py-1.5 text-xs uppercase tracking-[0.18em] transition-colors duration-150 border",
+                                    i > 0 ? "-ml-px" : "",
+                                    active
+                                        ? "relative z-10 font-bold"
+                                        : "border-stage-cool-border text-stage-cool hover:border-stage-cool-border-hi hover:text-stage-cool-hi",
+                                ].join(" ")}
+                                style={
+                                    active
+                                        ? {
+                                              color: `var(--color-vendor-${v})`,
+                                              borderColor: `var(--color-vendor-${v})`,
+                                              background: `color-mix(in srgb, var(--color-vendor-${v}) 12%, #080f18)`,
+                                          }
+                                        : undefined
+                                }
+                            >
+                                {v.toUpperCase()}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
         </div>
-    );
-}
-
-function VendorSelect() {
-    const ctx = useContext(VendorContext);
-
-    if (!ctx) return null;
-
-    return (
-        <label className={`justify-center flex w-full`}>
-            <span>Vendor:</span>
-            <select
-                className={`
-                    appearance-none border-[10px_solid_rgb(var(--vendor-${ctx.vendor})]
-                    rounded ml-2 px-2 py-1 text-sm
-                `}
-                style={
-                    { backgroundColor: `var(--color-vendor-${ctx.vendor})` } as React.CSSProperties
-                }
-                value={ctx.vendor}
-                onChange={(e) => ctx.setVendor(e.target.value as Vendor)}
-            >
-                {vendors.map((v) => (
-                    <option key={v} value={v}>
-                        {v.toUpperCase()}
-                    </option>
-                ))}
-            </select>
-        </label>
     );
 }

@@ -157,15 +157,12 @@ export function TOC({
                                 href={`#${item.id}`}
                                 onClick={(event) => handleClick(event, item.id)}
                                 className={[
-                                    "block tracking-[0.15em] leading-snug transition-colors duration-150",
+                                    "block tracking-[0.15em] leading-snug transition-colors duration-150 border-l-2 pl-2",
                                     activeId === item.id
-                                        ? t.active
-                                        : `${t.text} ${t.textHover}`,
+                                        ? `${t.active} border-current`
+                                        : `${t.text} ${t.textHover} border-transparent`,
                                 ].join(" ")}
                             >
-                                {activeId === item.id && (
-                                    <span className={`mr-1 ${t.marker}`}>›</span>
-                                )}
                                 {item.text}
                             </a>
                         </li>
