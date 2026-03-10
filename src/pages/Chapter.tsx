@@ -143,7 +143,7 @@ function Chapter({
                     <section
                         id="cover"
                         ref={handbookRef}
-                        className="not-prose h-screen content-center justify-items-center"
+                        className="not-prose h-screen flex items-center justify-center"
                     >
                         <Handbook index={volume} title={title} />
                     </section>
