@@ -23,6 +23,14 @@ function Chapter({
     const [activeSection, setActiveSection] = useState<"story" | "handbook" | "cover" | null>(
         "story",
     );
+    const [tocOpen, setTocOpen] = useState(false);
+
+    useEffect(() => {
+        if (!tocOpen) return;
+        const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setTocOpen(false); };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [tocOpen]);
 
     useEffect(() => {
         const sections = [
@@ -62,15 +70,43 @@ function Chapter({
         return () => observer.disconnect();
     }, []);
 
+    const tocProps = {
+        containerRef: activeSection === "story" ? storyContentRef : handbookContentRef,
+        refreshKey: activeSection,
+        index: volume,
+    } as const;
+
     return (
         <main className="relative min-h-screen">
+            {/* ── Desktop sidebar ── */}
             <aside className="hidden lg:block fixed left-0 top-0 h-screen w-64 overflow-y-auto border-r border-stage-border-lo bg-stage-base px-4 py-6">
-                <TOC
-                    containerRef={activeSection === "story" ? storyContentRef : handbookContentRef}
-                    refreshKey={activeSection}
-                    index={volume}
-                />
+                <TOC {...tocProps} />
             </aside>
+
+            {/* ── Mobile: toggle button ── */}
+            <button
+                onClick={() => setTocOpen(true)}
+                aria-label="Open table of contents"
+                className="lg:hidden fixed top-4 left-4 z-40 border border-stage-border-lo bg-stage-base px-3 py-2 font-mono text-sm text-stage-tertiary transition-colors hover:border-stage-border-hi hover:text-stage-primary"
+            >
+                ☰
+            </button>
+
+            {/* ── Mobile: backdrop ── */}
+            <div
+                className={`lg:hidden fixed inset-0 z-40 bg-black/60 transition-opacity duration-300 ${tocOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+                onClick={() => setTocOpen(false)}
+            />
+
+            {/* ── Mobile: slide-in drawer ── */}
+            <div
+                className={`lg:hidden fixed left-0 top-0 z-50 h-screen w-64 overflow-y-auto border-r border-stage-border-lo bg-stage-base px-4 py-6 transition-transform duration-300 ${tocOpen ? "translate-x-0" : "-translate-x-full"}`}
+                onClick={(e) => {
+                    if ((e.target as HTMLElement).closest("a")) setTocOpen(false);
+                }}
+            >
+                <TOC {...tocProps} />
+            </div>
 
             {/*
                 Prose color overrides — no dark:prose-invert, we set everything manually
