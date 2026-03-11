@@ -43,6 +43,7 @@ function App() {
                                 HandbookText={chapter.HandbookText}
                                 volume={index + 1}
                                 title={chapter.handbookTitle}
+                                storyTitle={chapter.storyTitle}
                             />
                         }
                     />

@@ -1,5 +1,53 @@
 import { useEffect, useRef, useState, type ComponentType } from "react";
 
+function ReadingProgress({ handbookRef }: { handbookRef: React.RefObject<HTMLDivElement | null> }) {
+    const [progress, setProgress] = useState(0);
+    const [handbookStart, setHandbookStart] = useState(1);
+    useEffect(() => {
+        const update = () => {
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollable <= 0) return;
+            setProgress(window.scrollY / scrollable);
+            if (handbookRef.current) {
+                const top = handbookRef.current.getBoundingClientRect().top + window.scrollY;
+                setHandbookStart(top / scrollable);
+            }
+        };
+        window.addEventListener("scroll", update, { passive: true });
+        update();
+        return () => window.removeEventListener("scroll", update);
+    }, [handbookRef]);
+    const split = `${handbookStart * 100}%`;
+    return (
+        <div
+            aria-hidden="true"
+            className="fixed top-0 left-0 right-0 z-50 h-px pointer-events-none"
+            style={{
+                clipPath: `inset(0 ${(1 - progress) * 100}% 0 0)`,
+                background: `linear-gradient(to right, #cc9040 ${split}, #7ab0cc ${split})`,
+            }}
+        />
+    );
+}
+
+function BackToTop() {
+    const [visible, setVisible] = useState(false);
+    useEffect(() => {
+        const update = () => setVisible(window.scrollY > 600);
+        window.addEventListener("scroll", update, { passive: true });
+        return () => window.removeEventListener("scroll", update);
+    }, []);
+    return (
+        <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Back to top"
+            className={`fixed bottom-8 right-8 z-40 border border-stage-border-lo bg-stage-base px-3 py-2 font-mono text-xs text-stage-tertiary transition-all duration-300 hover:border-stage-border-hi hover:text-stage-primary ${visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        >
+            ↑
+        </button>
+    );
+}
+
 import Handbook from "../components/Handbook";
 import { TOC } from "../components/TOC";
 import { CHAPTERS } from "../content/chapters";
@@ -10,11 +58,13 @@ function Chapter({
     HandbookText,
     volume,
     title,
+    storyTitle,
 }: {
     StoryText: ComponentType;
     HandbookText: ComponentType;
     volume: number;
     title: string;
+    storyTitle: string;
 }) {
     const storyContentRef = useRef<HTMLDivElement | null>(null);
     const handbookRef = useRef<HTMLDivElement | null>(null);
@@ -24,6 +74,10 @@ function Chapter({
         "story",
     );
     const [tocOpen, setTocOpen] = useState(false);
+
+    useEffect(() => {
+        document.title = `${storyTitle} — The GPU Showrunner Chronicles`;
+    }, [storyTitle]);
 
     useEffect(() => {
         if (!tocOpen) return;
@@ -78,6 +132,8 @@ function Chapter({
 
     return (
         <main className="relative min-h-screen">
+            <ReadingProgress handbookRef={handbookRef} />
+            <BackToTop />
             {/* ── Desktop sidebar ── */}
             <aside className="hidden lg:block fixed left-0 top-0 h-screen w-64 overflow-y-auto border-r border-stage-border-lo bg-stage-base px-4 py-6">
                 <TOC {...tocProps} />

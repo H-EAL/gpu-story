@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FlipBoard } from "../components/FlipBoard";
 import { CHAPTERS } from "../content/chapters";
@@ -20,10 +21,15 @@ function ChapterRow({ index }: { index: number }) {
                     <FlipBoard value={String(index).padStart(2, "0")} width={2} speedMs={3} />
                 </div>
 
-                {/* Story title */}
-                <p className="flex-1 min-w-0 font-mono text-base uppercase tracking-wider text-stage-primary transition-colors duration-150 group-hover:text-stage-bright">
-                    {chapter.storyTitle}
-                </p>
+                {/* Story title + read time */}
+                <div className="flex-1 min-w-0 flex flex-col gap-0.5">
+                    <p className="font-mono text-base uppercase tracking-wider text-stage-primary transition-colors duration-150 group-hover:text-stage-bright">
+                        {chapter.storyTitle}
+                    </p>
+                    <span className="font-mono text-[0.65rem] text-stage-subtle tabular-nums">
+                        {chapter.readTimeMin} min read
+                    </span>
+                </div>
 
                 {/* Handbook — cool blue badge to contrast the warm story tones */}
                 <Link
@@ -38,6 +44,9 @@ function ChapterRow({ index }: { index: number }) {
 }
 
 function Home() {
+    useEffect(() => {
+        document.title = "The GPU Showrunner Chronicles";
+    }, []);
     return (
         <div className="min-h-screen bg-stage-base flex flex-col">
             <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-20 flex flex-col gap-14">
@@ -47,7 +56,7 @@ function Home() {
                     <div className="flex items-center gap-4">
                         <span className="h-px flex-1 bg-stage-border-lo" />
                         <p className="font-mono text-xs uppercase tracking-[0.28em] text-stage-secondary">
-                            GPU Architecture Explained
+                            A narrative explanation of GPU architecture
                         </p>
                         <span className="h-px flex-1 bg-stage-border-lo" />
                     </div>

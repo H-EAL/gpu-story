@@ -12,6 +12,7 @@ import Handbook4 from "./chapter-4/handbook.mdx";
 export type Chapter = {
     storyTitle: string;
     handbookTitle: string;
+    readTimeMin: number;
     StoryText: ComponentType;
     HandbookText: ComponentType;
 };
@@ -20,24 +21,28 @@ export const CHAPTERS: Chapter[] = [
     {
         storyTitle: "Once Upon a Theater",
         handbookTitle: "Infrastructure",
+        readTimeMin: 12,
         StoryText: Story1,
         HandbookText: Handbook1,
     },
     {
         storyTitle: "The Call to Stage",
         handbookTitle: "Dispatch",
+        readTimeMin: 10,
         StoryText: Story2,
         HandbookText: Handbook2,
     },
     {
         storyTitle: "From Yard to Stage",
         handbookTitle: "Memory",
+        readTimeMin: 11,
         StoryText: Story3,
         HandbookText: Handbook3,
     },
     {
         storyTitle: "The Cost of Disagreement",
         handbookTitle: "Control Flow",
+        readTimeMin: 8,
         StoryText: Story4,
         HandbookText: Handbook4,
     },
