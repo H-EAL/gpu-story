@@ -7,11 +7,21 @@ import Home from "./pages/Home";
 import { CHAPTERS } from "./content/chapters";
 
 function ScrollToTop() {
-    const { pathname } = useLocation();
+    const { pathname, hash } = useLocation();
 
     useEffect(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
-    }, [pathname]);
+        const raf = requestAnimationFrame(() => {
+            if (hash) {
+                const el = document.getElementById(hash.slice(1));
+                if (el) {
+                    el.scrollIntoView({ behavior: "instant" as ScrollBehavior });
+                    return;
+                }
+            }
+            window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+        });
+        return () => cancelAnimationFrame(raf);
+    }, [pathname, hash]);
 
     return null;
 }

@@ -25,7 +25,7 @@ function Handbook({ index, title }: { index: number; title: string }) {
                         <br />
                         Handbook
                     </h1>
-                    <p className="text-[0.55rem] uppercase tracking-[0.18em] text-stage-cool m-0 leading-relaxed">
+                    <p className="text-[0.65rem] uppercase tracking-[0.18em] text-stage-cool m-0 leading-relaxed">
                         A Practical Guide to Theater Operations
                     </p>
                 </div>
@@ -36,7 +36,7 @@ function Handbook({ index, title }: { index: number; title: string }) {
                 {/* Volume + Topic */}
                 <div className="flex flex-col gap-2 sm:gap-3">
                     <div className="flex flex-col gap-1">
-                        <span className="text-[0.42rem] uppercase tracking-[0.25em] text-stage-cool/50">
+                        <span className="text-[0.52rem] uppercase tracking-[0.25em] text-stage-cool/50">
                             Volume
                         </span>
                         <span className="text-sm sm:text-lg font-bold text-stage-cool-hi leading-none">
@@ -44,10 +44,10 @@ function Handbook({ index, title }: { index: number; title: string }) {
                         </span>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <span className="text-[0.42rem] uppercase tracking-[0.25em] text-stage-cool/50">
+                        <span className="text-[0.52rem] uppercase tracking-[0.25em] text-stage-cool/50">
                             Topic
                         </span>
-                        <span className="text-[0.6rem] sm:text-xs font-semibold uppercase tracking-[0.12em] text-stage-cool-hi">
+                        <span className="text-[0.68rem] sm:text-xs font-semibold uppercase tracking-[0.12em] text-stage-cool-hi">
                             {title}
                         </span>
                     </div>

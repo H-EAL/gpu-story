@@ -141,7 +141,7 @@ function Chapter({
                         <StoryText />
                     </article>
                     <section
-                        id="cover"
+                        id="handbook"
                         ref={handbookRef}
                         className="not-prose h-screen flex items-center justify-center"
                     >
@@ -149,7 +149,6 @@ function Chapter({
                     </section>
                     {/* Handbook — steel-blue headings, sans-serif for reference feel */}
                     <article
-                        id="handbook"
                         ref={handbookContentRef}
                         className="font-sans text-[#b8ccd8] [--tw-prose-bold:#d8eaf4] [--tw-prose-headings:#7ab0cc] [--tw-prose-links:#7ab0cc] [--tw-prose-code:#7ab0cc] [--tw-prose-pre-code:#b8ccd8] [--tw-prose-bullets:#4a7a9b] [--tw-prose-counters:#4a7a9b] [--tw-prose-quotes:#8aaabb] [--tw-prose-quote-borders:#2e5470]"
                     >
